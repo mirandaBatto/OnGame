@@ -3,7 +3,7 @@ import {getFirestore, collection, doc, addDoc, getDoc, getDocs, updateDoc, delet
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD1U51swejMhZGNUnV9pJYlDwjgoPucG-c",
+  apiKey: process.env.API_KEY,
   authDomain: "ongame-dc4f1.firebaseapp.com",
   projectId: "ongame-dc4f1",
   storageBucket: "ongame-dc4f1.appspot.com",
