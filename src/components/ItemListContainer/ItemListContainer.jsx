@@ -1,26 +1,25 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom";
 import ItemList from "../ItemList/ItemList"
+//context
+import { getProducts } from "../../utils/firebase";
 const ItemListContainer = () => {
   const [productos, setProductos] = useState([]);
   const {idCategoria} = useParams();
   useEffect(()=>{
     if(idCategoria){
-      fetch("../json/productos.json")
-    .then(response => response.json())
+      getProducts()
     .then(items =>{
-      const products = items.filter(item => item.idCategoria === idCategoria)
-      const productsList = ItemList({products});
-      console.log(productsList)
+      const products = items.filter(prod => prod.stock > 0).filter(item => item.idCategoria === idCategoria)
+      const productsList = <ItemList products={products} plantilla="item"/>;
       setProductos(productsList)
     })
     .catch(error => console.log(error))
     }else{
-      fetch("./json/productos.json")
-      .then(response => response.json())
-      .then(products =>{
-        const productsList = ItemList({products});
-        console.log(productsList)
+      getProducts()
+      .then(items =>{
+        const products = items.filter(prod => prod.stock > 0)
+        const productsList = <ItemList products={products} plantilla="item"/>;
         setProductos(productsList)
       })
       .catch(error => console.log(error))
